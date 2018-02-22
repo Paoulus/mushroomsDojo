@@ -1,0 +1,92 @@
+{"frames": [
+
+{
+	"filename": "Dead (1).png",
+	"frame": {"x":0,"y":0,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (2).png",
+	"frame": {"x":562,"y":0,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (3).png",
+	"frame": {"x":1124,"y":0,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (4).png",
+	"frame": {"x":0,"y":519,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (5).png",
+	"frame": {"x":562,"y":519,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (6).png",
+	"frame": {"x":1124,"y":519,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (7).png",
+	"frame": {"x":0,"y":1038,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (8).png",
+	"frame": {"x":562,"y":1038,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (9).png",
+	"frame": {"x":1124,"y":1038,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+},
+{
+	"filename": "Dead (10).png",
+	"frame": {"x":0,"y":1557,"w":562,"h":519},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":562,"h":519},
+	"sourceSize": {"w":562,"h":519}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas_dead.png",
+	"format": "RGBA8888",
+	"size": {"w":1686,"h":2076},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:859a6651ff0497c5aa1509ca22b045bd:dfbe3a62dd226bed6165cf1dff830292:b15cd565f1162639964c01b260dc926d$"
+}
+}
