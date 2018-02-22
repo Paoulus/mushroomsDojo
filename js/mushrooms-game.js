@@ -13,13 +13,29 @@ function preload(){
 }
 
 function create(){
-	robot = game.add.sprite(40,40,'idle','Idle (1).png');
-	robot.scale.setTo(0.3,0.3);
-	robot.animations.add('idle',Phaser.Animation.generateFrameNames('Idle \(',0,8,'\).png',0),20,true);
+	robot = game.add.sprite(150,20,'run','Run (1).png');
+	robot.scale.setTo(0.1,0.1);
 
-	robot.animations.play('idle');
+	game.physics.enable(robot,Phaser.Physics.ARCADE);
+
+	//adding animations using frames obtained from the atlases
+	//the generateFrameNames produces the names for the single frames; 
+	//es: generateNames(Run(,1,7,)) produces Run(1),Run(2),Run(3), .... ; look into the docs for more details
+	robot.animations.add('idle',Phaser.Animation.generateFrameNames('Idle \(',1,7,'\).png',0),20,true);
+	robot.animations.add('run',Phaser.Animation.generateFrameNames('Run \(',1,7,'\).png',0),20,true);
+
+	robot.body.bounce.y = 0.2;
+	robot.body.setSize(10,10,5,16);
 }
 
 function update(){
-
+	robot.body.velocity.x = 0;
+	
+	if(game.input.keyboard.isDown(Phaser.Keyboard.D)){
+		robot.animations.play('run');
+		robot.body.velocity.x = 100;
+	}
+	if(game.input.keyboard.isDown(Phaser.Keyboard.A)){
+		robot.body.velocity.x = -100;
+	}
 }
