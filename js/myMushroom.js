@@ -9,7 +9,7 @@ function preload(){
 	game.load.tilemap('level1','assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
 	game.load.image('tiles-1','assets/mappe/tiles-1.png');
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
-
+	game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
 }
 	
 var map;
