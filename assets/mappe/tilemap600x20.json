@@ -11,8 +11,54 @@
          "width":600,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "name":"Checkpoints",
+         "objects":[
+                {
+                 "gid":69,
+                 "height":64,
+                 "id":28,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":2434.66666666667,
+                 "y":385.333333333333
+                }, 
+                {
+                 "gid":69,
+                 "height":64,
+                 "id":29,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":4858.25,
+                 "y":304.25
+                }, 
+                {
+                 "gid":69,
+                 "height":64,
+                 "id":30,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":6852,
+                 "y":336
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":1,
+ "nextobjectid":31,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.1",
@@ -30,6 +76,19 @@
          "tilecount":68,
          "tileheight":16,
          "tilewidth":16
+        }, 
+        {
+         "columns":5,
+         "firstgid":69,
+         "image":"..\/spritesheets\/flag.png",
+         "imageheight":64,
+         "imagewidth":160,
+         "margin":0,
+         "name":"flag",
+         "spacing":0,
+         "tilecount":5,
+         "tileheight":64,
+         "tilewidth":32
         }],
  "tilewidth":16,
  "type":"map",

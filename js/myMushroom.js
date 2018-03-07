@@ -9,7 +9,9 @@ function preload(){
 	game.load.tilemap('level1','assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
 	game.load.image('tiles-1','assets/mappe/tiles-1.png');
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
-	game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
+    game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
+    //aggiungo lo spritesheet del checkpoint
+    game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
 }
 	
 var map;
@@ -19,6 +21,13 @@ var cursors;
 var jumpButton;
 var facing;
 var jumpTimer=0;
+
+//variabili che memorizzano la posizione del salvataggio
+var saveX = 0;
+var saveY = 400;
+
+//gruppo che conterra gli oggetti dell'object layer "Checkpoints"
+var checkpoints;
 
 
 
@@ -52,6 +61,37 @@ function create(){
     cursors = game.input.keyboard.createCursorKeys();
 
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    //creo il gruppo di oggetti e faccio in modo che abbiano un corpo
+    checkpoints = game.add.group();
+    checkpoints.enableBody = true;
+
+    //createFromObjects è una funzione che permette di prendere un livello di tiled di tipo Object Layer e inserire gli oggetti nel gruppo da noi creato
+    //parametri:	nome dell'Object Layer su tiled
+		//						id dell'oggetto (lo si trova nel file .json)
+		//						nome dello spritesheet utilizzato
+		//						numero del frame da utilizzare inizialmente
+		//						booleano che ci indica se l'oggetto esiste oppure no (se è visibile?)
+		//						booleano che ci indica se l'oggetto si distrugge quando esce dal campo di ripresa della camera
+		//						nome del gruppo in cui inserire questi oggetti (checkpoints in questo caso)
+		map.createFromObjects('Checkpoints',69,'flag',0,true,true,checkpoints);
+		
+		//forEach che modifica gli attributi di ogni oggetto presente nel gruppo checkpoints
+		checkpoints.forEach(function(checkpoint){
+			checkpoint.body.immovable = true;
+
+			//gli aggiungiamo l'animazione della bandiera che sale,
+			checkpoint.animations.add('save', [0,1,2,3,4], 5, false);
+
+			//la gravità non influisce sulla bandiera (altrimenti cadrebbe nel vuoto!)
+			checkpoint.body.allowGravity = false;
+
+			//booleano per controllare che quel checkpoint sia già stato utilizzato (per evitare che l'animazione si resetti ogni volta che il nostro giocatore ci passa sopra)
+			checkpoint.used = false;
+				
+	},this);
+
+	game.physics.enable(checkpoints,Phaser.Physics.ARCADE);
 	
 }
 
@@ -105,6 +145,41 @@ function update(){
     {
         player.body.velocity.y = -208;
         jumpTimer = game.time.now + 750;
-    }
+		}
+		
+	//overlap ci permette di controllare quando il giocatore si trova sopra un checkpoints
+	//il parametro saveGame è la funzione che viene svolta quando uno dei checkpoint viene attraversato dal giocatore
+	game.physics.arcade.overlap(player,checkpoints,saveGame,null,this);
+
+	//controllo nel caso il giocatore cade fuori dalla mappa. Useremo i checkpoints 
+	if (player.y+player.height>game.world.height){
+
+		//posizioniamo il giocatore nella posizione dell'ultimo checkpoint 
+		player.x= saveX;
+		player.y = saveY;
+
+		//posizioniamo la camera nella posizione del giocatore (non serve?)
+		game.camera.x = player.x;
+	}
 	
+}
+
+//funzione che serve per salvare quando si attraversa un checkpoint
+function saveGame(player,checkpoint){
+
+	//controllo che il checkpint non sia già stato usato
+	if(!checkpoint.used){
+		
+		//faccio partire l'animazione
+		checkpoint.animations.play('save');
+
+		//salvo le coordinate
+		saveX = checkpoint.x;
+		saveY = checkpoint.y;
+
+		//dico che questo checkpoint è stato usato
+		checkpoint.used = true;
+	}
+	
+
 }
