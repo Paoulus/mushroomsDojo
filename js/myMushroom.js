@@ -198,7 +198,8 @@ function update(){
 	}
 	game.physics.arcade.collide(enemies, layer);
 
-	game.physics.arcade.collide(enemies,player,killPlayer);
+	//game.physics.arcade.collide(enemies,player);
+	game.physics.arcade.overlap(player, enemies, killPlayer, null, this);
 
 
 }
