@@ -21,6 +21,7 @@ var cursors;
 var jumpButton;
 var facing;
 var jumpTimer=0;
+var lifes = 3;
 
 //variabili che memorizzano la posizione del salvataggio
 var saveX = 0;
@@ -29,7 +30,8 @@ var saveY = 400;
 //gruppo che conterra gli oggetti dell'object layer "Checkpoints"
 var checkpoints;
 
-
+var endGameText;
+var stateText;
 
 function create(){
 	game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -98,6 +100,10 @@ function create(){
 
 	game.physics.enable(checkpoints,Phaser.Physics.ARCADE);
 
+    endGameText = game.add.text(0,0,"Game Over",{font: "bold 20px Consolas",fill:"#ffffff"});
+    endGameText.visible = false;
+
+    stateText = game.add.text(game.world.x,game.world.y,"Vite: " + lifes,{font: "bold 20px Consolas",fill:"#ffffff"});
 }
 
 var no_key = false; //true => non ci sono cambi di animzione direzionale
@@ -166,12 +172,25 @@ function update(){
 	//controllo nel caso il giocatore cade fuori dalla mappa. Useremo i checkpoints 
 	if (player.y-(player.height*2)>game.world.height){
 
-		//posizioniamo il giocatore nella posizione dell'ultimo checkpoint 
-		player.x= saveX;
-		player.y = saveY;
+        lifes--;
 
-		//posizioniamo la camera nella posizione del giocatore (non serve?)
-		game.camera.x = player.x;
+        if(lifes > 0){
+    		//posizioniamo il giocatore nella posizione dell'ultimo checkpoint 
+    		player.x= saveX;
+    		player.y = saveY;
+
+    		//posizioniamo la camera nella posizione del giocatore (non serve?)
+    		game.camera.x = player.x;
+        }
+        else{
+            //il giocatore ha finito le vite
+            endGameText.x = game.camera.x + 20;
+            endGameText.y = game.camera.y + 20;
+            endGameText.visible = true;
+
+            //kill the player when the lives are 0
+            player.kill();
+        }
 	}
 	
 }
