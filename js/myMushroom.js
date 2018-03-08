@@ -6,12 +6,12 @@ var game = new Phaser.Game(800, 480, Phaser.AUTO, 'gameDiv',
 	});
 
 function preload(){
-	game.load.tilemap('level1','assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
-	game.load.image('tiles-1','assets/mappe/tiles-1.png');
+	game.load.tilemap('level1','Assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
+	game.load.image('tiles-1','Assets/mappe/tiles-1.png');
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
-    game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
+    game.load.atlas('robot','Assets/atlas_robot_basicPackaging.png','Assets/atlas_robot_basicPackaging.json');
     //aggiungo lo spritesheet del checkpoint
-    game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
+    game.load.spritesheet('flag','Assets/spritesheets/flag.png',32,64);
 }
 	
 var map;
@@ -44,17 +44,19 @@ function create(){
 	layer.resizeWorld();
 
 	game.physics.arcade.gravity.y = 384;
-	player = game.add.sprite(32,32,'player');
-	game.physics.enable(player,Phaser.Physics.ARCADE);
+	player = game.add.sprite(32,32,'robot','Idle (1).png');
+	game.physics.enable(player,Phaser.Physics.ARCADE,true);
 
 	//player.body.bounce.y = 0.2;
 	player.body.colliderWorldBounds = true;
 	//player.body.checkCollision.up = false;
 	//player.body.checkCollision.down = false;
 
-	player.animations.add('left', [0, 1, 2, 3], 10, true);
-    player.animations.add('turn', [4], 20, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
+	player.animations.add('run', Phaser.Animation.generateFrameNames('Run (',1,8,').png'), 10, true);
+    player.animations.add('idle', Phaser.Animation.generateFrameNames('Idle (',1,8,').png'), 10, true);
+    player.animations.add('jump', Phaser.Animation.generateFrameNames('Jump (',1,8,').png'), 10, true);
+
+    player.anchor.setTo(0.5,0.5);
 
     game.camera.follow(player);
 
@@ -107,8 +109,9 @@ function update(){
 
         if (facing != 'left')
         {
-            player.animations.play('left');
+            player.animations.play('run');
             facing = 'left';
+            player.scale.x = -1;
         }
     }
     else if (cursors.right.isDown)
@@ -117,24 +120,16 @@ function update(){
 
         if (facing != 'right')
         {
-            player.animations.play('right');
+            player.animations.play('run');
             facing = 'right';
+            player.scale.x = 1;
         }
     }
     else
     {
         if (facing != 'idle')
         {
-            player.animations.stop();
-
-            if (facing == 'left')
-            {
-                player.frame = 0;
-            }
-            else
-            {
-                player.frame = 5;
-            }
+            player.animations.play('idle');
 
             facing = 'idle';
         }
@@ -152,7 +147,7 @@ function update(){
 	game.physics.arcade.overlap(player,checkpoints,saveGame,null,this);
 
 	//controllo nel caso il giocatore cade fuori dalla mappa. Useremo i checkpoints 
-	if (player.y+player.height>game.world.height){
+	if (player.y-(player.height*2)>game.world.height){
 
 		//posizioniamo il giocatore nella posizione dell'ultimo checkpoint 
 		player.x= saveX;
@@ -180,6 +175,4 @@ function saveGame(player,checkpoint){
 		//dico che questo checkpoint è stato usato
 		checkpoint.used = true;
 	}
-	
-
 }
