@@ -53,48 +53,48 @@ function create(){
 	//player.body.checkCollision.down = false;
 
 	player.animations.add('run', Phaser.Animation.generateFrameNames('Run (',1,8,').png'), 10, true);
-	    player.animations.add('idle', Phaser.Animation.generateFrameNames('Idle (',1,8,').png'), 10, true);
-	    player.animations.add('jump', Phaser.Animation.generateFrameNames('Jump (',1,8,').png'), 10, true);
+	player.animations.add('idle', Phaser.Animation.generateFrameNames('Idle (',1,8,').png'), 10, true);
+	player.animations.add('jump', Phaser.Animation.generateFrameNames('Jump (',1,8,').png'), 10, true);
 
-	    player.anchor.setTo(0.5,0.5);
+	player.anchor.setTo(0.5,0.5);
 
-	    game.camera.follow(player);
+	game.camera.follow(player);
 
-	    cursors = game.input.keyboard.createCursorKeys();
+	cursors = game.input.keyboard.createCursorKeys();
 
-	    jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-	    //creo il gruppo di oggetti e faccio in modo che abbiano un corpo
-	    checkpoints = game.add.group();
-	    checkpoints.enableBody = true;
+	//creo il gruppo di oggetti e faccio in modo che abbiano un corpo
+	checkpoints = game.add.group();
+	checkpoints.enableBody = true;
 
-	    //createFromObjects è una funzione che permette di prendere un livello di tiled di tipo Object Layer e inserire gli oggetti nel gruppo da noi creato
-	    //parametri:	nome dell'Object Layer su tiled
-		//						id dell'oggetto (lo si trova nel file .json)
-		//						nome dello spritesheet utilizzato
-		//						numero del frame da utilizzare inizialmente
-		//						booleano che ci indica se l'oggetto esiste oppure no (se è visibile?)
-		//						booleano che ci indica se l'oggetto si distrugge quando esce dal campo di ripresa della camera
-		//						nome del gruppo in cui inserire questi oggetti (checkpoints in questo caso)
-		map.createFromObjects('Checkpoints',69,'flag',0,true,true,checkpoints);
-		
-		//forEach che modifica gli attributi di ogni oggetto presente nel gruppo checkpoints
-		checkpoints.forEach(function(checkpoint){
-			checkpoint.body.immovable = true;
+	//createFromObjects è una funzione che permette di prendere un livello di tiled di tipo Object Layer e inserire gli oggetti nel gruppo da noi creato
+	//parametri:	nome dell'Object Layer su tiled
+	//						id dell'oggetto (lo si trova nel file .json)
+	//						nome dello spritesheet utilizzato
+	//						numero del frame da utilizzare inizialmente
+	//						booleano che ci indica se l'oggetto esiste oppure no (se è visibile?)
+	//						booleano che ci indica se l'oggetto si distrugge quando esce dal campo di ripresa della camera
+	//						nome del gruppo in cui inserire questi oggetti (checkpoints in questo caso)
+	map.createFromObjects('Checkpoints',69,'flag',0,true,true,checkpoints);
 
-			//gli aggiungiamo l'animazione della bandiera che sale,
-			checkpoint.animations.add('save', [0,1,2,3,4], 5, false);
+	//forEach che modifica gli attributi di ogni oggetto presente nel gruppo checkpoints
+	checkpoints.forEach(function(checkpoint){
+		checkpoint.body.immovable = true;
 
-			//la gravità non influisce sulla bandiera (altrimenti cadrebbe nel vuoto!)
-			checkpoint.body.allowGravity = false;
+		//gli aggiungiamo l'animazione della bandiera che sale,
+		checkpoint.animations.add('save', [0,1,2,3,4], 5, false);
 
-			//booleano per controllare che quel checkpoint sia già stato utilizzato (per evitare che l'animazione si resetti ogni volta che il nostro giocatore ci passa sopra)
-			checkpoint.used = false;
-				
+		//la gravità non influisce sulla bandiera (altrimenti cadrebbe nel vuoto!)
+		checkpoint.body.allowGravity = false;
+
+		//booleano per controllare che quel checkpoint sia già stato utilizzato (per evitare che l'animazione si resetti ogni volta che il nostro giocatore ci passa sopra)
+		checkpoint.used = false;
+
 	},this);
 
 	game.physics.enable(checkpoints,Phaser.Physics.ARCADE);
-	
+
 }
 
 var no_key = false; //true => non ci sono cambi di animzione direzionale
