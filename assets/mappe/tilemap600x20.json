@@ -65,62 +65,62 @@
                 {
                  "gid":75,
                  "height":34,
-                 "id":31,
+                 "id":39,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":44,
-                 "x":1415.9375,
-                 "y":352.0625
+                 "x":1403.875,
+                 "y":351.25
                 }, 
                 {
                  "gid":75,
                  "height":34,
-                 "id":32,
+                 "id":40,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":44,
-                 "x":2921.25,
-                 "y":303.9375
+                 "x":2914.25,
+                 "y":302.875
                 }, 
                 {
                  "gid":75,
                  "height":34,
-                 "id":33,
+                 "id":41,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":44,
-                 "x":6036.45454545455,
-                 "y":288.090909090909
+                 "x":6043.875,
+                 "y":287.5
                 }, 
                 {
                  "gid":75,
                  "height":34,
-                 "id":34,
+                 "id":42,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":44,
-                 "x":7800.375,
-                 "y":304.25
+                 "x":7824.75,
+                 "y":303.625
                 }, 
                 {
                  "gid":75,
                  "height":34,
-                 "id":35,
+                 "id":43,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":44,
-                 "x":9155.27272727273,
-                 "y":383.727272727273
+                 "x":9127.63636363636,
+                 "y":383.545454545455
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -128,7 +128,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":36,
+ "nextobjectid":44,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.1",
@@ -161,11 +161,11 @@
          "tilewidth":32
         }, 
         {
-         "columns":1,
+         "columns":2,
          "firstgid":74,
          "image":"..\/spritesheets\/slime.png",
-         "imageheight":68,
-         "imagewidth":44,
+         "imageheight":34,
+         "imagewidth":88,
          "margin":0,
          "name":"slime",
          "spacing":0,

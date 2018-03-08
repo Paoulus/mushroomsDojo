@@ -11,7 +11,9 @@ function preload(){
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
     game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
     //aggiungo lo spritesheet del checkpoint
-    game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
+	game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
+	
+	game.load.spritesheet('slime','Assets/spritesheets/slime.png',44,34);
 }
 	
 var map;
@@ -29,6 +31,7 @@ var saveY = 400;
 //gruppo che conterra gli oggetti dell'object layer "Checkpoints"
 var checkpoints;
 
+var enemies;
 
 
 function create(){
@@ -92,6 +95,22 @@ function create(){
 	},this);
 
 	game.physics.enable(checkpoints,Phaser.Physics.ARCADE);
+
+	enemies = game.add.group();
+	enemies.enableBody=true;
+
+	map.createFromObjects('Enemies',75,'slime',1,true,false,enemies);
+
+
+	enemies.forEach(function(enemy){	
+
+		enemy.body.immovable = true;
+		enemy.animations.add('enemyMovement',[0,1],4,true);
+		enemy.animations.play('enemyMovement');
+
+	},this);
+
+	game.physics.enable(enemies,Phaser.Physics.ARCADE);
 	
 }
 
@@ -161,8 +180,14 @@ function update(){
 		//posizioniamo la camera nella posizione del giocatore (non serve?)
 		game.camera.x = player.x;
 	}
-	
+	game.physics.arcade.collide(enemies, layer);
+
+	game.physics.arcade.collide(enemies,player,killPlayer);
+
+
 }
+
+
 
 //funzione che serve per salvare quando si attraversa un checkpoint
 function saveGame(player,checkpoint){
@@ -181,5 +206,12 @@ function saveGame(player,checkpoint){
 		checkpoint.used = true;
 	}
 	
+	
+}
 
+function killPlayer(player,enemy){
+
+
+	player.x = saveX;
+	player.y = saveY;
 }
