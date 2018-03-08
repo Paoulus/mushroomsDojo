@@ -9,9 +9,9 @@ function preload(){
 	game.load.tilemap('level1','Assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
 	game.load.image('tiles-1','Assets/mappe/tiles-1.png');
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
-    game.load.atlas('robot','Assets/atlas_robot_basicPackaging.png','Assets/atlas_robot_basicPackaging.json');
-    //aggiungo lo spritesheet del checkpoint
-    game.load.spritesheet('flag','Assets/spritesheets/flag.png',32,64);
+    	game.load.atlas('robot','Assets/atlas_robot_basicPackaging.png','Assets/atlas_robot_basicPackaging.json');
+    	//aggiungo lo spritesheet del checkpoint
+    	game.load.spritesheet('flag','Assets/spritesheets/flag.png',32,64);
 }
 	
 var map;
@@ -53,23 +53,23 @@ function create(){
 	//player.body.checkCollision.down = false;
 
 	player.animations.add('run', Phaser.Animation.generateFrameNames('Run (',1,8,').png'), 10, true);
-    player.animations.add('idle', Phaser.Animation.generateFrameNames('Idle (',1,8,').png'), 10, true);
-    player.animations.add('jump', Phaser.Animation.generateFrameNames('Jump (',1,8,').png'), 10, true);
+	    player.animations.add('idle', Phaser.Animation.generateFrameNames('Idle (',1,8,').png'), 10, true);
+	    player.animations.add('jump', Phaser.Animation.generateFrameNames('Jump (',1,8,').png'), 10, true);
 
-    player.anchor.setTo(0.5,0.5);
+	    player.anchor.setTo(0.5,0.5);
 
-    game.camera.follow(player);
+	    game.camera.follow(player);
 
-    cursors = game.input.keyboard.createCursorKeys();
+	    cursors = game.input.keyboard.createCursorKeys();
 
-    jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	    jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-    //creo il gruppo di oggetti e faccio in modo che abbiano un corpo
-    checkpoints = game.add.group();
-    checkpoints.enableBody = true;
+	    //creo il gruppo di oggetti e faccio in modo che abbiano un corpo
+	    checkpoints = game.add.group();
+	    checkpoints.enableBody = true;
 
-    //createFromObjects è una funzione che permette di prendere un livello di tiled di tipo Object Layer e inserire gli oggetti nel gruppo da noi creato
-    //parametri:	nome dell'Object Layer su tiled
+	    //createFromObjects è una funzione che permette di prendere un livello di tiled di tipo Object Layer e inserire gli oggetti nel gruppo da noi creato
+	    //parametri:	nome dell'Object Layer su tiled
 		//						id dell'oggetto (lo si trova nel file .json)
 		//						nome dello spritesheet utilizzato
 		//						numero del frame da utilizzare inizialmente
@@ -97,51 +97,61 @@ function create(){
 	
 }
 
+var no_key = false; //true => non ci sono cambi di animzione direzionale
+var jumped = false; //true => è in corso l'animazione di salto
 function update(){
 
 	game.physics.arcade.collide(player, layer);
 
 	player.body.velocity.x = 0;
-
+	
+	if(no_key && jumped && player.body.velocity.y == 0) {
+		player.animations.stop();
+		player.frame = 8;
+		console.log("jump ended");
+		player.animations.play('idle');
+		facing = 'idle';  
+	}
+	
 	if (cursors.left.isDown)
-    {
-        player.body.velocity.x = -150;
-
-        if (facing != 'left')
-        {
-            player.animations.play('run');
-            facing = 'left';
-            player.scale.x = -1;
-        }
-    }
-    else if (cursors.right.isDown)
-    {
-        player.body.velocity.x = 150;
-
-        if (facing != 'right')
-        {
-            player.animations.play('run');
-            facing = 'right';
-            player.scale.x = 1;
-        }
-    }
-    else
-    {
-        if (facing != 'idle')
-        {
-            player.animations.play('idle');
-
-            facing = 'idle';
-        }
-    }
-
-
-    if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
-    {
-        player.body.velocity.y = -208;
-        jumpTimer = game.time.now + 750;
+    	{
+			player.body.velocity.x = -150;
+		if (facing != 'left')
+		{
+		    player.animations.play('run');
+		    facing = 'left';
+		    player.scale.x = -1;
 		}
-		
+	}
+	else if (cursors.right.isDown)
+	{
+		player.body.velocity.x = 150;
+
+		if (facing != 'right')
+		{
+		    player.animations.play('run');
+		    facing = 'right';
+		    player.scale.x = 1;
+		}
+	} else {
+		no_key = true;
+		if (facing != 'idle')
+		{
+		    player.animations.play('idle');
+
+		    facing = 'idle';
+		}
+	}
+
+
+	if (jumpButton.isDown && player.body.velocity.y == 0 && game.time.now > jumpTimer)
+	{
+		player.body.velocity.y = -208;
+		jumpTimer = game.time.now + 750;
+		player.animations.play('jump');
+        	jumped = true;
+	} else if(player.body.velocity.y ==0) jumped = false; //se non ho salto e non è in corso un salto
+
 	//overlap ci permette di controllare quando il giocatore si trova sopra un checkpoints
 	//il parametro saveGame è la funzione che viene svolta quando uno dei checkpoint viene attraversato dal giocatore
 	game.physics.arcade.overlap(player,checkpoints,saveGame,null,this);
