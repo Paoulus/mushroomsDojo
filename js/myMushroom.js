@@ -9,21 +9,13 @@ function preload(){
 	game.load.tilemap('level1','assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
 	game.load.image('tiles-1','Assets/mappe/tiles-1.png');
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
-<<<<<<< HEAD
+
     game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
     //aggiungo lo spritesheet del checkpoint
 	game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
 	
-	game.load.spritesheet('slime','Assets/spritesheets/slime.png',44,34);
-||||||| merged common ancestors
-    game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
-    //aggiungo lo spritesheet del checkpoint
-    game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
-=======
-    	game.load.atlas('robot','Assets/atlas_robot_basicPackaging.png','Assets/atlas_robot_basicPackaging.json');
-    	//aggiungo lo spritesheet del checkpoint
-    	game.load.spritesheet('flag','Assets/spritesheets/flag.png',32,64);
->>>>>>> master
+	game.load.spritesheet('slime','Assets/spritesheets/slime.png',44,32);
+
 }
 	
 var map;
@@ -110,7 +102,6 @@ function create(){
 	},this);
 
 	game.physics.enable(checkpoints,Phaser.Physics.ARCADE);
-<<<<<<< HEAD
 
 	enemies = game.add.group();
 	enemies.enableBody=true;
@@ -123,16 +114,13 @@ function create(){
 		enemy.body.immovable = true;
 		enemy.animations.add('enemyMovement',[0,1],4,true);
 		enemy.animations.play('enemyMovement');
+		enemy.tween = game.add.tween(enemy).to({x:enemy.x+100},1000,'Linear',true,0,-1,true);
+		enemy.tween.start();
 
 	},this);
 
 	game.physics.enable(enemies,Phaser.Physics.ARCADE);
 	
-||||||| merged common ancestors
-	
-=======
-
->>>>>>> master
 }
 
 var no_key = false; //true => non ci sono cambi di animzione direzionale
