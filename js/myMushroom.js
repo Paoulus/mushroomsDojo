@@ -6,7 +6,7 @@ var game = new Phaser.Game(800, 480, Phaser.AUTO, 'gameDiv',
 	});
 
 function preload(){
-	game.load.tilemap('level1','Assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
+	game.load.tilemap('level1','assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
 	game.load.image('tiles-1','Assets/mappe/tiles-1.png');
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
     	game.load.atlas('robot','Assets/atlas_robot_basicPackaging.png','Assets/atlas_robot_basicPackaging.json');
@@ -57,6 +57,9 @@ function create(){
 	player.animations.add('jump', Phaser.Animation.generateFrameNames('Jump (',1,8,').png'), 10, true);
 
 	player.anchor.setTo(0.5,0.5);
+
+    player.scale.x = 0.28;
+    player.scale.y = 0.28;
 
 	game.camera.follow(player);
 
@@ -120,7 +123,9 @@ function update(){
 		{
 		    player.animations.play('run');
 		    facing = 'left';
-		    player.scale.x = -1;
+            if(player.scale.x > 0){
+		      player.scale.x *= -1;
+            }
 		}
 	}
 	else if (cursors.right.isDown)
@@ -131,7 +136,9 @@ function update(){
 		{
 		    player.animations.play('run');
 		    facing = 'right';
-		    player.scale.x = 1;
+		    if(player.scale.x < 0){
+              player.scale.x *= -1;
+            }
 		}
 	} else {
 		no_key = true;
