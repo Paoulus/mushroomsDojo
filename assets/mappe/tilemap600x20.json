@@ -25,8 +25,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":2434.66666666667,
-                 "y":385.333333333333
+                 "x":2434.67,
+                 "y":385.333
                 }, 
                 {
                  "gid":69,
@@ -57,8 +57,66 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "name":"Enemies",
+         "objects":[
+                {
+                 "gid":75,
+                 "height":32,
+                 "id":44,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":44,
+                 "x":1402.72727272727,
+                 "y":351.454545454545
+                }, 
+                {
+                 "gid":75,
+                 "height":32,
+                 "id":45,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":44,
+                 "x":2916,
+                 "y":302.727272727273
+                }, 
+                {
+                 "gid":75,
+                 "height":32,
+                 "id":46,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":44,
+                 "x":6044.72727272727,
+                 "y":287.090909090909
+                }, 
+                {
+                 "gid":75,
+                 "height":32,
+                 "id":47,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":44,
+                 "x":7824.90909090909,
+                 "y":303.636363636364
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":31,
+ "nextobjectid":48,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.1",
@@ -89,6 +147,32 @@
          "tilecount":5,
          "tileheight":64,
          "tilewidth":32
+        }, 
+        {
+         "columns":2,
+         "firstgid":74,
+         "image":"..\/spritesheets\/slime.png",
+         "imageheight":32,
+         "imagewidth":88,
+         "margin":0,
+         "name":"slime",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":32,
+         "tilewidth":44
+        }, 
+        {
+         "columns":2,
+         "firstgid":76,
+         "image":"..\/spritesheets\/slime.png",
+         "imageheight":32,
+         "imagewidth":88,
+         "margin":0,
+         "name":"slime",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":32,
+         "tilewidth":44
         }],
  "tilewidth":16,
  "type":"map",

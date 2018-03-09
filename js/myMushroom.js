@@ -9,9 +9,13 @@ function preload(){
 	game.load.tilemap('level1','assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
 	game.load.image('tiles-1','Assets/mappe/tiles-1.png');
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
-    	game.load.atlas('robot','Assets/atlas_robot_basicPackaging.png','Assets/atlas_robot_basicPackaging.json');
-    	//aggiungo lo spritesheet del checkpoint
-    	game.load.spritesheet('flag','Assets/spritesheets/flag.png',32,64);
+
+    game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
+    //aggiungo lo spritesheet del checkpoint
+	game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
+	
+	game.load.spritesheet('slime','Assets/spritesheets/slime.png',44,32);
+
 }
 	
 var map;
@@ -29,6 +33,8 @@ var saveY = 400;
 
 //gruppo che conterra gli oggetti dell'object layer "Checkpoints"
 var checkpoints;
+
+var enemies;
 
 var stateText;
 
@@ -99,10 +105,28 @@ function create(){
 
 	game.physics.enable(checkpoints,Phaser.Physics.ARCADE);
 
-    stateText = game.add.text(0,0,"Game Over",{font: "bold 20px Consolas",fill:"#ffffff"});
-    stateText.visible = false;
+	enemies = game.add.group();
+	enemies.enableBody=true;
 
-    stateText = game.add.text(game.world.x,game.world.y,"Vite: " + lifes,{font: "bold 20px Consolas",fill:"#ffffff"});
+	map.createFromObjects('Enemies',75,'slime',1,true,false,enemies);
+
+
+	enemies.forEach(function(enemy){	
+
+		enemy.body.immovable = true;
+		enemy.animations.add('enemyMovement',[0,1],4,true);
+		enemy.animations.play('enemyMovement');
+		enemy.tween = game.add.tween(enemy).to({x:enemy.x+100},1000,'Linear',true,0,-1,true);
+		enemy.tween.start();
+
+	},this);
+
+	game.physics.enable(enemies,Phaser.Physics.ARCADE);
+	
+  stateText = game.add.text(0,0,"Game Over",{font: "bold 20px Consolas",fill:"#ffffff"});
+  stateText.visible = false;
+
+  stateText = game.add.text(game.world.x,game.world.y,"Vite: " + lifes,{font: "bold 20px Consolas",fill:"#ffffff"});
 }
 
 var no_key = false; //true => non ci sono cambi di animzione direzionale
@@ -192,11 +216,17 @@ function update(){
             player.kill();
         }
 	}
-	
-    //aggiorna la posizione del testo 
-    stateText.x = game.camera.x + 20;
-    stateText.y = game.camera.y + 20;
+  game.physics.arcade.collide(enemies, layer);
+
+	//game.physics.arcade.collide(enemies,player);
+	game.physics.arcade.overlap(player, enemies, killPlayer, null, this);
+
+  //aggiorna la posizione del testo 
+  stateText.x = game.camera.x + 20;
+  stateText.y = game.camera.y + 20;
 }
+
+
 
 //funzione che serve per salvare quando si attraversa un checkpoint
 function saveGame(player,checkpoint){
@@ -214,4 +244,18 @@ function saveGame(player,checkpoint){
 		//dico che questo checkpoint è stato usato
 		checkpoint.used = true;
 	}
+
+	
+	
 }
+
+function killPlayer(player,enemy){
+
+
+	player.x = saveX;
+	player.y = saveY;
+}
+
+	
+
+
