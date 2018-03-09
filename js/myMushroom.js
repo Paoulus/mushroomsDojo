@@ -7,14 +7,14 @@ var game = new Phaser.Game(800, 480, Phaser.AUTO, 'gameDiv',
 
 function preload(){
 	game.load.tilemap('level1','assets/mappe/tilemap600x20.json',null,Phaser.Tilemap.TILED_JSON);
-	game.load.image('tiles-1','Assets/mappe/tiles-1.png');
+	game.load.image('tiles-1','assets/mappe/tiles-1.png');
 	game.load.spritesheet('player','assets/spritesheets/dude.png',32,48);
 
-    game.load.atlas('robot','Assets/atlas_robot_basicPackaging.png','Assets/atlas_robot_basicPackaging.json');
+    game.load.atlas('robot','assets/atlas_robot_basicPackaging.png','assets/atlas_robot_basicPackaging.json');
     //aggiungo lo spritesheet del checkpoint
-	game.load.spritesheet('flag','Assets/spritesheets/flag.png',32,64);
+	game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
 	
-	game.load.spritesheet('slime','Assets/spritesheets/slime.png',44,32);
+	game.load.spritesheet('slime','assets/spritesheets/slime.png',44,32);
 
 }
 	
