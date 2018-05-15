@@ -14,9 +14,6 @@ function preload(){
     //aggiungo lo spritesheet del checkpoint
 	game.load.spritesheet('flag','assets/spritesheets/flag.png',32,64);
 	
-	//inserisco gli oggetti
-	game.load.image('battery','assests/images/extra_life.png')
-
 	game.load.spritesheet('slime','assets/spritesheets/slime.png',44,32);
 
 }
@@ -28,7 +25,7 @@ var cursors;
 var jumpButton;
 var facing;
 var jumpTimer=0;
-var lives = 3; //Non liFes ma liVes
+var lifes = 3;
 
 //variabili che memorizzano la posizione del salvataggio
 var saveX = 0;
@@ -129,7 +126,7 @@ function create(){
   stateText = game.add.text(0,0,"Game Over",{font: "bold 20px Consolas",fill:"#ffffff"});
   stateText.visible = false;
 
-  stateText = game.add.text(game.world.x,game.world.y,"Vite: " + lives,{font: "bold 20px Consolas",fill:"#ffffff"});
+  stateText = game.add.text(game.world.x,game.world.y,"Vite: " + lifes,{font: "bold 20px Consolas",fill:"#ffffff"});
 }
 
 var no_key = false; //true => non ci sono cambi di animzione direzionale
@@ -197,11 +194,10 @@ function update(){
 
 	//controllo nel caso il giocatore cade fuori dalla mappa. Useremo i checkpoints 
 	if (player.y-(player.height*2)>game.world.height){
-		lose_life(player)
-		/*
-        lives--;
 
-        if(lives > 0){
+        lifes--;
+
+        if(lifes > 0){
     		//posizioniamo il giocatore nella posizione dell'ultimo checkpoint 
     		player.x= saveX;
     		player.y = saveY;
@@ -210,7 +206,7 @@ function update(){
     		game.camera.x = player.x;
 
             //il giocatore è ancora in vita;
-            stateText.text = "Vite: " + lives;
+            stateText.text = "Vite: " + lifes;
         }
         else{
             //il giocatore ha finito le vite
@@ -218,13 +214,12 @@ function update(){
 
             //kill the player when the lifes are 0
             player.kill();
-		}
-		*/
+        }
 	}
   game.physics.arcade.collide(enemies, layer);
 
 	//game.physics.arcade.collide(enemies,player);
-	game.physics.arcade.overlap(player, enemies, lose_life, null, this);
+	game.physics.arcade.overlap(player, enemies, killPlayer, null, this);
 
   //aggiorna la posizione del testo 
   stateText.x = game.camera.x + 20;
@@ -254,34 +249,13 @@ function saveGame(player,checkpoint){
 	
 }
 
-/*function killPlayer(player,enemy){
+function killPlayer(player,enemy){
 
 
 	player.x = saveX;
 	player.y = saveY;
-}*/
+}
 
-function lose_life(player){
-	lives--;
-
-	if(lives > 0){
-		//posizioniamo il giocatore nella posizione dell'ultimo checkpoint 
-		player.x= saveX;
-		player.y = saveY;
-
-		//posizioniamo la camera nella posizione del giocatore (non serve?)
-		game.camera.x = player.x;
-
-		//il giocatore è ancora in vita;
-		stateText.text = "Vite: " + lives;
-	}
-	else{
-		//il giocatore ha finito le vite
-		stateText.text ="Game Over";
-
-		//kill the player when the lifes are 0
-		player.kill();
-	}
-}	
+	
 
 
